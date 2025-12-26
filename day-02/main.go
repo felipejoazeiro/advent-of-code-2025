@@ -16,7 +16,7 @@ func main() {
 		return
 	}
 
-	/* fmt.Println("Processando:", firstPart(data)) */
+	fmt.Println("Processando:", firstPart(data))
 	fmt.Println("Processando:", secondPart(data))
 }
 func getData() ([]string, error) {
