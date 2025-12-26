@@ -15,12 +15,13 @@ func main() {
 		return
 	}
 	fmt.Println("Processando:", firstPart(data))
+	fmt.Println("Processando:", secondPart(data))
 }
 
 func firstPart(data []string) int {
 	value := 0
 
-	m:=make([][]rune, len(data))
+	m := make([][]rune, len(data))
 
 	for i, s := range data {
 		m[i] = []rune(s)
@@ -45,7 +46,7 @@ func firstPart(data []string) int {
 					if m[i+1][j+1] == '@' {
 						valid++
 					}
-				}else if j == len(m[i])-1 {
+				} else if j == len(m[i])-1 {
 					if m[i+1][j] == '@' {
 						valid++
 					}
@@ -55,7 +56,7 @@ func firstPart(data []string) int {
 					if m[i+1][j-1] == '@' {
 						valid++
 					}
-				}else {
+				} else {
 					if m[i][j-1] == '@' {
 						valid++
 					}
@@ -72,7 +73,7 @@ func firstPart(data []string) int {
 						valid++
 					}
 				}
-			}else if i == len(m)-1 {
+			} else if i == len(m)-1 {
 				if j == 0 {
 					if m[i-1][j] == '@' {
 						valid++
@@ -83,7 +84,7 @@ func firstPart(data []string) int {
 					if m[i-1][j+1] == '@' {
 						valid++
 					}
-				}else if j == len(m[i])-1 {
+				} else if j == len(m[i])-1 {
 					if m[i-1][j] == '@' {
 						valid++
 					}
@@ -93,7 +94,7 @@ func firstPart(data []string) int {
 					if m[i-1][j-1] == '@' {
 						valid++
 					}
-				}else {
+				} else {
 					if m[i][j-1] == '@' {
 						valid++
 					}
@@ -110,7 +111,7 @@ func firstPart(data []string) int {
 						valid++
 					}
 				}
-			}else {
+			} else {
 				if j == 0 {
 					if m[i-1][j] == '@' {
 						valid++
@@ -127,7 +128,7 @@ func firstPart(data []string) int {
 					if m[i+1][j+1] == '@' {
 						valid++
 					}
-				}else if j == len(m[i])-1 {
+				} else if j == len(m[i])-1 {
 					if m[i-1][j] == '@' {
 						valid++
 					}
@@ -143,7 +144,7 @@ func firstPart(data []string) int {
 					if m[i+1][j-1] == '@' {
 						valid++
 					}
-				}else {
+				} else {
 					if m[i-1][j] == '@' {
 						valid++
 					}
@@ -170,7 +171,6 @@ func firstPart(data []string) int {
 					}
 				}
 			}
-
 
 			if valid <= 3 {
 				value++
@@ -181,7 +181,60 @@ func firstPart(data []string) int {
 	return value
 }
 
-func 
+func secondPart(data []string) int {
+	m := make([][]rune, len(data))
+	for i, s := range data {
+		m[i] = []rune(s)
+	}
+
+	total := 0
+	h := len(m)
+	w := len(m[0])
+
+	directions := [][2]int{
+		{-1, -1}, {-1, 0}, {-1, 1},
+		{0, -1}, {0, 1},
+		{1, -1}, {1, 0}, {1, 1},
+	}
+
+	for {
+		toRemove := make([][2]int, 0)
+
+		for i := 0; i < h; i++ {
+			for j := 0; j < w; j++ {
+				if m[i][j] != '@' {
+					continue
+				}
+
+				adj := 0
+				for _, d := range directions {
+					ni, nj := i+d[0], j+d[1]
+					if ni < 0 || ni >= h || nj < 0 || nj >= w {
+						continue
+					}
+					if m[ni][nj] == '@' {
+						adj++
+					}
+				}
+
+				if adj < 4 {
+					toRemove = append(toRemove, [2]int{i, j})
+				}
+			}
+		}
+
+		if len(toRemove) == 0 {
+			break
+		}
+
+		for _, p := range toRemove {
+			m[p[0]][p[1]] = '.'
+		}
+		total += len(toRemove)
+	}
+
+	return total
+}
 
 func getDate() ([]string, error) {
 	_, thisFile, _, ok := runtime.Caller(0)
