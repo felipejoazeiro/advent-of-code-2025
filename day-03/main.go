@@ -15,7 +15,7 @@ func main() {
 		fmt.Println("Erro ao obter dados:", err)
 		return
 	}
-	/* fmt.Println("Processando:", firstPart(data)) */
+	fmt.Println("Processando:", firstPart(data)) 
 	fmt.Println("Processando:", secondPart(data))
 
 }
@@ -25,7 +25,6 @@ func firstPart(data []string) int {
 
 	for _, line := range data {
 		raw := strings.Split(line, "")
-		fmt.Println("Valor integro:", raw)
 
 		hightestValue := 0
 		secondHightestValue := 0
@@ -56,7 +55,6 @@ func secondPart(data []string) int {
 
 	for _, line := range data {
 		raw := strings.Split(line, "")
-		fmt.Println("Valor integro:", raw)
 		data := []int{}
 		dataValue := 0
 		indexValue := 0
@@ -80,7 +78,6 @@ func secondPart(data []string) int {
 			valueStr += strconv.Itoa(v)
 		}
 		intValue, _ := strconv.Atoi(valueStr)
-		fmt.Println("Valor parcial:", valueStr)
 		value += intValue
 	}
 	return value
